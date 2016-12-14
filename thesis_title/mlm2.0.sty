@@ -1,0 +1,181 @@
+%--------------------------------------------------------------%
+%   Style File for The Monthly Lecture Meeting                 %
+%   at Inteligent System Design Laboratory, Doshisha Univ.     %
+%   Designed by  LaTeX Team (Shinya Ogura oguchan@mikilab)     %
+%--------------------------------------------------------------%
+%   $Id: mlm_basic.sty,v 1.2 2006/05/22 21:04:56 kobayashi Exp $
+%--------------------------------------------------------------%
+
+%----------------------------------------------------------------
+% 他のスタイルのインクルード
+%----------------------------------------------------------------
+\usepackage{mikibase}
+
+%----------------------------------------------------------------
+% ページのレイアウト
+%----------------------------------------------------------------
+\topmargin=-0.8cm
+\headheight=0cm
+\headsep=0cm  \footskip=0cm
+\oddsidemargin=-0.85cm  \evensidemargin=-0.85cm
+\textheight=27.5cm  \textwidth=17.6cm
+\footskip=1.5cm
+\columnsep=1.0cm
+
+
+%----------------------------------------------------------------
+% sectionなどの再定義
+%----------------------------------------------------------------
+
+%sectionの再定義%
+
+\renewcommand{\section}{%
+ \leftskip=0em%
+  \@startsection{section}{1}{\z@}%
+	            {.5\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	            {.2\Cvs \@plus.3\Cdp}%
+	            {\reset@font}}
+
+%subsectionの再定義%
+
+\renewcommand{\subsection}{%
+  \leftskip=2em%
+  \@startsection{subsection}{1}{\z@}%
+	            {.3\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	            {.2\Cvs \@plus.3\Cdp}%
+	            {\reset@font}}
+
+\renewcommand{\subsubsection}{%
+  \@startsection{subsubsection}{1}{\z@}%
+	            {.2\Cvs \@plus.5\Cdp \@minus.2 \Cdp}%
+	            {.1\Cvs \@plus.3\Cdp}%
+	            {\reset@font\bfseries}}
+%\renewcommand{\thesection}{\@Roman\c@section}%
+
+
+
+%----------------------------------------------------------------
+% ヘッダ部分
+%----------------------------------------------------------------
+%タイトル
+\def\title#1{%
+  { {\Large {修論題目：#1}}}\\ %
+}
+
+\def\author#1{%
+  %% \vspace{-3mm}
+  \large{著者：#1}\\%
+  %	\smallskip%
+  %	\small{#2}
+}
+\def\studentid#1{%
+  %% \vspace{-3mm}
+  \large{学籍番号：#1}\\%
+  %	\smallskip%
+  %	\small{#2}
+}
+\def\fellow#1{%
+  \large{引継学生：#1}\\%
+  %	\smallskip%
+  %	\small{#2}
+}
+
+
+
+%ヘッダの先頭
+\def\beginheader#1#2#3{
+  \setlength{\baselineskip}{13.0pt}
+	        {\hfill 作成年月日：#1年#2月#3日}\\
+	        \begin{picture}(500,3)
+		      \put(0,2){\line(1,0){500}}
+	        \end{picture}
+}
+
+%ヘッダの最後
+\def\endheader{
+  \vspace{-4mm}
+  \begin{picture}(500,3)
+	\put(0,2){\line(1,0){500}}
+  \end{picture}
+}
+
+
+
+%--------------------------------------------------------------
+%引用記号の再定義
+%--------------------------------------------------------------
+%LaTeX階梯　p.206
+
+\def\@biblabel#1{#1)}
+\def\@cite#1#2{{$^{\mbox{\scriptsize $#1$}}$%
+	\if@tempswa , #2\fi}$^{\mbox{\scriptsize $)$}}$ }
+
+
+
+
+%--------------------------------------------------------------
+%キャプションの：を削除．図をFig,表をTableに
+%--------------------------------------------------------------
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \iftdir\sbox\@tempboxa{#1\hskip1zw#2}%
+  \else\sbox\@tempboxa{#1\hskip1zw #2}%
+  \fi
+  \ifdim \wd\@tempboxa >\hsize
+  \iftdir #1\hskip1zw#2\relax\par
+  \else #1\hskip1zw #2\relax\par\fi
+  \else
+  \global \@minipagefalse
+  \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+%--------------------------------------------------------------
+%図表及び数式の参照方法を定義
+%--------------------------------------------------------------
+\def\fgref#1{\figurename\hskip1ex \ref{#1}}
+\def\tbref#1{\tablename\hskip1ex \ref{#1}}
+\def\eqref#1{式(\ref{#1})}
+
+
+%--------------------------------------------------------------
+%abstract環境の更新
+%--------------------------------------------------------------
+
+\renewenvironment{abstract}{%
+  \vspace{4mm}
+  アブストラクト:\\
+  \vspace{-5mm}
+  \begin{center}\begin{minipage}{15.5cm}{}%
+}%
+                 {\end{minipage}\end{center}\vspace{4mm}}
+
+                 %--------------------------------------------------------------
+                 %bibTeXにURL参照用命令を追加
+                 %--------------------------------------------------------------
+                 \renewcommand{\url}{\begingroup \urlstyle{tt}\Url}
+
+                 %--------------------------------------------------------------
+                 %1999年度版mikilab互換コマンド
+                 %--------------------------------------------------------------
+
+                 \def\month#1#2#3{%
+	               {\noindent\small\bfseries 月例発表会　%
+	                 Vol. {#3}({#1}年{#2}月)\hfill 知的システムデザイン研究室}\bigskip%
+                 }
+
+
+
+                 \def\subject#1#2{%
+	               {\bf {\Large {#1}}\\ %
+	                 \medskip {#2}}\\ \bigskip%
+                 }
+
+                 \def\name#1#2{%
+	               \large{#1}（知的システムデザイン研究室）\\%
+	                     {#2} (Intelligent Systems Design Laboratory)\\%
+	                     \bigskip%
+                 }
